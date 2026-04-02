@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
 const Record = require("../models/record");
 
-// Create Record
 exports.createRecord = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -13,7 +12,7 @@ exports.createRecord = async (req, res) => {
 
     const record = await Record.create({
       ...req.body,
-      createdBy: new mongoose.Types.ObjectId(req.user.id), // ✅ FIXED
+      createdBy: new mongoose.Types.ObjectId(req.user.id),
     });
 
     res.status(201).json(record);
@@ -23,7 +22,6 @@ exports.createRecord = async (req, res) => {
   }
 };
 
-// Get Records (with filtering + pagination)
 exports.getRecords = async (req, res) => {
   try {
     const { type, category, startDate, endDate, page = 1, limit = 5 } =
@@ -65,7 +63,6 @@ exports.getRecords = async (req, res) => {
   }
 };
 
-// Update Record
 exports.updateRecord = async (req, res) => {
   try {
     const record = await Record.findOneAndUpdate(
@@ -84,7 +81,6 @@ exports.updateRecord = async (req, res) => {
   }
 };
 
-// Delete Record
 exports.deleteRecord = async (req, res) => {
   try {
     const deleted = await Record.findOneAndDelete({

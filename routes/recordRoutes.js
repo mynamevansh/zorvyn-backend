@@ -11,14 +11,50 @@ const {
 const auth = require("../middleware/authMiddleware");
 const role = require("../middleware/roleMiddleware");
 
-// Admin only
-router.post("/", auth, role("admin"), createRecord);
+const { body } = require("express-validator");
 
-// All roles can view
-router.get("/", auth, role("admin", "analyst", "viewer"), getRecords);
+const validateRecord = [
+  body("amount")
+    .isNumeric()
+    .withMessage("Amount must be a number"),
 
-// Admin only
-router.put("/:id", auth, role("admin"), updateRecord);
-router.delete("/:id", auth, role("admin"), deleteRecord);
+  body("type")
+    .isIn(["income", "expense"])
+    .withMessage("Type must be either income or expense"),
+
+  body("category")
+    .notEmpty()
+    .withMessage("Category is required"),
+];
+
+router.post(
+  "/",
+  auth,
+  role("admin"),
+  validateRecord,
+  createRecord
+);
+
+router.get(
+  "/",
+  auth,
+  role("admin", "analyst", "viewer"),
+  getRecords
+);
+
+router.put(
+  "/:id",
+  auth,
+  role("admin"),
+  validateRecord,
+  updateRecord
+);
+
+router.delete(
+  "/:id",
+  auth,
+  role("admin"),
+  deleteRecord
+);
 
 module.exports = router;
