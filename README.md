@@ -4,6 +4,13 @@ This project is a backend system for a finance dashboard that manages financial 
 
 ---
 
+## 🌐 Live API
+
+Base URL:
+https://zorvyn-backend-5y48.onrender.com
+
+---
+
 ## 🚀 Features
 
 ### 🔐 User & Role Management
