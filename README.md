@@ -47,6 +47,8 @@ This project is a backend system for a finance dashboard that manages financial 
 
 ---
 
+```
+
 ## 📁 Project Structure
 
 
@@ -77,7 +79,7 @@ zorvyn-backend/
 ├── app.js # Express app setup
 └── server.js # Server entry point
 
-
+```
 ---
 
 ## ⚙️ Setup Instructions
