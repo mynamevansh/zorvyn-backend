@@ -53,13 +53,29 @@ This project is a backend system for a finance dashboard that manages financial 
 zorvyn-backend/
 │
 ├── controllers/ # Business logic
+│ ├── userController.js
+│ ├── recordController.js
+│ └── dashboardController.js
+│
 ├── routes/ # API routes
+│ ├── userRoutes.js
+│ ├── recordRoutes.js
+│ └── dashboardRoutes.js
+│
 ├── models/ # Database schemas
+│ ├── user.js
+│ └── record.js
+│
 ├── middleware/ # Auth & role middleware
-├── config/ # DB connection
+│ ├── authMiddleware.js
+│ └── roleMiddleware.js
+│
+├── config/ # Database connection
+│ └── db.js
+│
 ├── .env # Environment variables
-├── app.js
-└── server.js
+├── app.js # Express app setup
+└── server.js # Server entry point
 
 
 ---
