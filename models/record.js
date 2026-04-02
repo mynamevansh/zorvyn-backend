@@ -30,4 +30,5 @@ const recordSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Record", recordSchema);
+module.exports =
+  mongoose.models.Record || mongoose.model("Record", recordSchema);
