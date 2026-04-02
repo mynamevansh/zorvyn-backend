@@ -63,3 +63,19 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const page = req.query.page || 1;
+    const limit = 5;
+
+    const users = await User.find()
+      .select("-password")
+      .skip((Number(page) - 1) * limit)
+      .limit(limit)
+      .lean();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
