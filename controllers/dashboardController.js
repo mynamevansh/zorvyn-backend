@@ -44,41 +44,31 @@ exports.getCategoryBreakdown = async (req, res) => {
     }
   };
 
-  exports.getMonthlyTrends = async (req, res) => {
-    try {
-      const data = await Record.aggregate([
-        {
-          $group: {
-            _id: { $month: "$date" },
-            total: { $sum: "$amount" }
-          }
+exports.getMonthlyTrends = async (req, res) => {
+  try {
+    const data = await Record.aggregate([
+      {
+        $group: {
+          _id: { $month: "$date" },
+          total: { $sum: "$amount" },
         },
-        { $sort: { "_id": 1 } }
-      ]);
-  
-      res.json(data);
-  
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  };
+      },
+      { $sort: { _id: 1 } },
+    ]);
 
-  exports.getMonthlyTrends = async (req, res) => {
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getRecentTransactions = async (req, res) => {
     try {
-      const data = await Record.aggregate([
-        {
-          $group: {
-            _id: { $month: "$date" },
-            total: { $sum: "$amount" }
-          }
-        },
-        {
-          $sort: { "_id": 1 }
-        }
-      ]);
+      const data = await Record.find()
+        .sort({ createdAt: -1 })
+        .limit(5);
   
       res.json(data);
-  
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
