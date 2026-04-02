@@ -31,7 +31,9 @@ exports.getRecords = async (req, res) => {
       };
     }
 
-    const records = await Record.find(filter);
+    filter.createdBy = req.user.id;
+
+    const records = await Record.find(filter).sort({ createdAt: -1 });
 
     res.json(records);
   } catch (error) {
@@ -42,11 +44,15 @@ exports.getRecords = async (req, res) => {
 // Update Record
 exports.updateRecord = async (req, res) => {
   try {
-    const record = await Record.findByIdAndUpdate(
-      req.params.id,
+    const record = await Record.findOneAndUpdate(
+      { _id: req.params.id, createdBy: req.user.id },
       req.body,
       { new: true }
     );
+
+    if (!record) {
+      return res.status(404).json({ message: "Record not found" });
+    }
 
     res.json(record);
   } catch (error) {
@@ -57,7 +63,13 @@ exports.updateRecord = async (req, res) => {
 // Delete Record
 exports.deleteRecord = async (req, res) => {
   try {
-    await Record.findByIdAndDelete(req.params.id);
+    const deleted = await Record.findOneAndDelete({
+      _id: req.params.id,
+      createdBy: req.user.id,
+    });
+    if (!deleted) {
+      return res.status(404).json({ message: "Record not found" });
+    }
     res.json({ message: "Record deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
