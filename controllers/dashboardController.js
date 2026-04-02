@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Record = require("../models/record");
 
+
 function ownerId(req) {
   return new mongoose.Types.ObjectId(req.user.id);
 }
@@ -90,7 +91,9 @@ exports.getRecentTransactions = async (req, res) => {
     try {
       const data = await Record.find({ createdBy: ownerId(req) })
         .sort({ createdAt: -1 })
-        .limit(5);
+        .limit(5)
+        .select("-__v")
+        .lean();
   
       res.json(data);
     } catch (error) {
