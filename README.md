@@ -150,11 +150,43 @@ npm run dev
 
 ## 🔑 Authentication
 
-All protected routes require:
+This API uses JWT-based authentication.
 
+### Step 1: Register or Login
 
-Authorization: Bearer <token>
+Use the following endpoint:
 
+`POST /api/users/login`
+
+```json
+{
+  "email": "your-email@example.com",
+  "password": "your-password"
+}
+```
+
+### Step 2: Copy the Token
+
+You will receive a response like:
+
+```json
+{
+  "token": "your_jwt_token_here"
+}
+```
+
+### Step 3: Use Token in Protected Routes
+
+Add this header on requests to protected routes:
+
+```
+Authorization: Bearer your_jwt_token_here
+```
+
+### ⚠️ Note
+
+- Tokens may expire after some time.
+- If you get `401 Unauthorized`, log in again to obtain a new token.
 
 ---
 
