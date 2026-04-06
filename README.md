@@ -48,6 +48,17 @@ To test admin-only APIs in this assignment/demo setup:
 }
 ```
 
+### 👑 Admin User
+
+Use the following credentials to test admin-level APIs (create, update, delete):
+
+```json
+{
+  "email": "vansh@gmail.com",
+  "password": "123456"
+}
+```
+
 ---
 
 ## ⚠️ Deployment Note
