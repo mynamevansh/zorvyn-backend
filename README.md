@@ -1,6 +1,6 @@
 # 💰 Zorvyn Finance Dashboard Backend
 
-This project is a backend system for a finance dashboard that manages financial records, user roles, and analytics. It is designed to provide secure, structured, and scalable APIs for a frontend dashboard.
+This is a production-ready backend system for a finance dashboard, designed with secure authentication, role-based access control, scalable data handling, and real-time financial analytics.
 
 ---
 
@@ -22,6 +22,23 @@ https://zorvyn-backend-5y48.onrender.com/api-docs
 ## 📄 API Documentation
 
 https://bit.ly/48mwf5k
+
+---
+
+## ⚡ Quick Test Guide
+
+1. Open Swagger docs: https://zorvyn-backend-5y48.onrender.com/api-docs
+2. Register or log in to get a JWT token.
+3. Click **Authorize** (top right in Swagger).
+4. Enter: `Bearer <your_token>` (or paste only the token if your Swagger UI adds the `Bearer` prefix automatically).
+5. Call protected endpoints directly from the documentation.
+
+---
+
+## ⚠️ Deployment Note
+
+- The API is hosted on **Render** (free tier).
+- The **first request after idle time** may take **30–50 seconds** while the service wakes up—this is normal cold-start behavior, not a broken API.
 
 ---
 
@@ -62,6 +79,16 @@ https://bit.ly/48mwf5k
 
 ---
 
+## 🔐 Security Considerations
+
+- JWT-based authentication for secure access
+- Role-based authorization (Admin, Analyst, Viewer)
+- Admin role restricted from public registration (no privilege escalation via signup)
+- Rate limiting to reduce abuse and automated spam
+- Input validation (`express-validator`) to reject malformed data
+
+---
+
 ## 🛠️ Tech Stack
 
 - Node.js
@@ -77,35 +104,36 @@ https://bit.ly/48mwf5k
 
 ## 📁 Project Structure
 
-```
+```text
 zorvyn-backend/
 │
-├── controllers/ # Business logic
-│ ├── userController.js
-│ ├── recordController.js
-│ └── dashboardController.js
+├── controllers/       # Business logic
+│   ├── userController.js
+│   ├── recordController.js
+│   └── dashboardController.js
 │
-├── routes/ # API routes
-│ ├── userRoutes.js
-│ ├── recordRoutes.js
-│ └── dashboardRoutes.js
+├── routes/              # API routes
+│   ├── userRoutes.js
+│   ├── recordRoutes.js
+│   └── dashboardRoutes.js
 │
-├── models/ # Database schemas
-│ ├── user.js
-│ └── record.js
+├── models/              # Database schemas
+│   ├── user.js
+│   └── record.js
 │
-├── middleware/ # Auth & role middleware
-│ ├── authMiddleware.js
-│ └── roleMiddleware.js
+├── middleware/          # Auth & role middleware
+│   ├── authMiddleware.js
+│   └── roleMiddleware.js
 │
-├── config/ # Database connection
-│ └── db.js
+├── config/              # Database connection & Swagger
+│   ├── db.js
+│   └── swagger.js
 │
-├── .env # Environment variables
-├── app.js # Express app setup
-└── server.js # Server entry point
-
+├── .env                 # Environment variables (not committed)
+├── app.js               # Express app setup
+└── server.js            # Server entry point
 ```
+
 ---
 
 ## ⚙️ Setup Instructions
@@ -198,7 +226,7 @@ Authorization: Bearer your_jwt_token_here
 
 ### ⚠️ Note
 
-- Tokens may expire after some time.
+- JWT tokens may expire; re-authentication is required to obtain a new token.
 - If you get `401 Unauthorized`, log in again to obtain a new token.
 
 ### 💡 Tip
@@ -228,12 +256,30 @@ You can use Postman or Hoppscotch to test the APIs easily.
 
 ---
 
-## 📬 Author
+## 🚀 Why This Project Stands Out
 
-**Vansh Ranawat**
+- Clean MVC-style layout with separation of concerns (routes, controllers, models, middleware)
+- Role-based access control with deliberate security choices (e.g., admin not self-assignable at registration)
+- MongoDB aggregation pipelines for realistic analytics (summaries, categories, monthly income vs expense)
+- Pagination and filtering for scalable record access
+- Swagger UI plus external API docs for straightforward testing
+- Production-oriented practices: rate limiting, HTTP logging, and read-path optimization with `.lean()`
+
+---
+
+## 📌 Note for Reviewers
+
+- No frontend is included; APIs can be tested via Swagger or Postman.
+- Sample users can be created with the **register** endpoint (`POST /api/users/register`).
 
 ---
 
 ## ⭐ Conclusion
 
 This backend is designed with scalability, security, and clean architecture in mind, making it a solid foundation for a finance dashboard and production-style API practices.
+
+---
+
+## 📬 Author
+
+**Vansh Ranawat**
