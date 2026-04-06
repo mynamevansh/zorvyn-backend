@@ -11,6 +11,14 @@ https://zorvyn-backend-5y48.onrender.com
 
 ---
 
+## 🌐 Live API Documentation
+
+Access Swagger docs:
+
+https://zorvyn-backend-5y48.onrender.com/api-docs
+
+---
+
 ## 📄 API Documentation
 
 https://bit.ly/48mwf5k

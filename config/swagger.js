@@ -4,9 +4,15 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Zorvyn Finance API",
+      title: "Zorvyn Finance Dashboard API",
       version: "1.0.0",
-      description: "API documentation for Finance Dashboard Backend",
+      description: `API documentation for Finance Dashboard Backend.
+
+🔐 Authentication:
+1. Login via /api/users/login
+2. Copy the JWT token
+3. Click "Authorize" button (top right)
+4. Enter: Bearer <your_token>`,
     },
     servers: [
       {
@@ -24,6 +30,8 @@ const options = {
           type: "http",
           scheme: "bearer",
           bearerFormat: "JWT",
+          description:
+            "JWT from POST /api/users/login. Follow the Authentication steps in the API description, then use Authorize.",
         },
       },
       schemas: {

@@ -48,24 +48,39 @@ const validateRecord = [
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Record'
+ *             example:
+ *               _id: "507f1f77bcf86cd799439011"
+ *               amount: 1500
+ *               type: income
+ *               category: Salary
+ *               notes: Monthly pay
+ *               createdAt: "2025-01-15T10:00:00.000Z"
  *       400:
- *         description: Validation error
+ *         description: Bad request
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ValidationError'
+ *             example:
+ *               errors:
+ *                 - msg: Amount must be a number
+ *                   param: amount
  *       401:
- *         description: Unauthorized — missing or invalid JWT
+ *         description: Unauthorized (Invalid or missing token)
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: No token
  *       500:
- *         description: Internal server error
+ *         description: Server error
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Internal server error
  */
 router.post(
   "/",
@@ -129,18 +144,31 @@ router.post(
  *                   type: array
  *                   items:
  *                     $ref: '#/components/schemas/Record'
+ *             example:
+ *               total: 12
+ *               page: 1
+ *               pages: 3
+ *               data:
+ *                 - _id: "507f1f77bcf86cd799439011"
+ *                   amount: 500
+ *                   type: expense
+ *                   category: Food
  *       401:
- *         description: Unauthorized — missing or invalid JWT
+ *         description: Unauthorized (Invalid or missing token)
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Invalid token
  *       500:
- *         description: Internal server error
+ *         description: Server error
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Internal server error
  */
 router.get(
   "/",
@@ -177,29 +205,39 @@ router.get(
  *             schema:
  *               $ref: '#/components/schemas/Record'
  *       400:
- *         description: Validation error
+ *         description: Bad request
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ValidationError'
+ *             example:
+ *               errors:
+ *                 - msg: Category is required
+ *                   param: category
  *       401:
- *         description: Unauthorized — missing or invalid JWT
+ *         description: Unauthorized (Invalid or missing token)
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Invalid token
  *       404:
  *         description: Record not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Record not found
  *       500:
- *         description: Internal server error
+ *         description: Server error
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Internal server error
  */
 router.put(
   "/:id",
@@ -226,24 +264,34 @@ router.put(
  *     responses:
  *       200:
  *         description: Record deleted
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Record deleted
  *       401:
- *         description: Unauthorized — missing or invalid JWT
+ *         description: Unauthorized (Invalid or missing token)
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: No token
  *       404:
  *         description: Record not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Record not found
  *       500:
- *         description: Internal server error
+ *         description: Server error
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Internal server error
  */
 router.delete(
   "/:id",

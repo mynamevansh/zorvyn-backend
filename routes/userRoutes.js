@@ -33,18 +33,30 @@ const role = require("../middleware/roleMiddleware");
  *     responses:
  *       201:
  *         description: User created
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "User created"
+ *               user:
+ *                 name: Vansh
+ *                 email: vansh@gmail.com
+ *                 role: viewer
  *       400:
- *         description: Bad request — e.g. email already registered
+ *         description: Bad request
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Email already registered
  *       500:
- *         description: Internal server error
+ *         description: Server error
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Internal server error
  */
 router.post("/register", register);
 
@@ -77,24 +89,35 @@ router.post("/register", register);
  *                   type: string
  *                 user:
  *                   $ref: '#/components/schemas/User'
+ *             example:
+ *               token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *               user:
+ *                 name: Vansh
+ *                 email: vansh@gmail.com
  *       400:
- *         description: Invalid credentials
+ *         description: Bad request
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Invalid credentials
  *       404:
- *         description: Invalid email or password
+ *         description: Not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Invalid email or password
  *       500:
- *         description: Internal server error
+ *         description: Server error
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Internal server error
  */
 router.post("/login", login);
 
@@ -102,8 +125,8 @@ router.post("/login", login);
  * @swagger
  * /api/users/all:
  *   get:
- *     summary: List all users (paginated)
- *     description: Admin only.
+ *     summary: Get all users (paginated)
+ *     description: Admin only — Get all users. Requires admin role and a valid JWT.
  *     tags: [Auth]
  *     security:
  *       - bearerAuth: []
@@ -118,17 +141,21 @@ router.post("/login", login);
  *       200:
  *         description: Array of users (password omitted)
  *       401:
- *         description: Unauthorized — missing or invalid JWT
+ *         description: Unauthorized (Invalid or missing token)
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Invalid token
  *       500:
- *         description: Internal server error
+ *         description: Server error
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorMessage'
+ *             example:
+ *               message: Internal server error
  */
 router.get("/all", auth, role("admin"), getAllUsers);
 
