@@ -205,6 +205,42 @@ npm run dev
 - PUT `/api/records/:id` (Admin only)
 - DELETE `/api/records/:id` (Admin only)
 
+## 📊 Get Records (Filters)
+
+You can filter records using query params:
+
+Example:
+
+`GET /api/records?type=income&category=Salary&page=1&limit=5`
+
+### Parameters:
+- type -> income | expense
+- category -> Salary, Food, Travel
+- startDate -> YYYY-MM-DD
+- endDate -> YYYY-MM-DD
+- page -> page number
+- limit -> records per page
+
+✅ Solution 3: Improve UX (Very Powerful)
+
+👉 Add default values in Swagger:
+
+```yaml
+page:
+  type: integer
+  example: 1
+
+limit:
+  type: integer
+  example: 5
+```
+
+🧠 Explain response like a pro
+
+You should tell interviewer:
+
+"The API returns paginated results. If no data matches filters, it returns an empty array with metadata like total, page, and pages."
+
 ---
 
 ### 📊 Dashboard

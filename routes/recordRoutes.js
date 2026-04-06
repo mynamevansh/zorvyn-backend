@@ -104,44 +104,69 @@ router.post(
  * @swagger
  * /api/records:
  *   get:
- *     summary: Get records
+ *     summary: Get records with filters
  *     description: |
- *       🔐 **Requires Authenticated User** (Admin/Analyst/Viewer)
+ *       📊 Fetch financial records
  *
- *       ⚡ After clicking **Execute**, use **Server Response** above for live output.
+ *       🔹 Example usage:
+ *       - type = income
+ *       - category = Salary
+ *       - startDate = 2026-01-01
+ *       - endDate = 2026-12-31
+ *       - page = 1
+ *       - limit = 5
  *
- *       ----------------------------------------
+ *       ⚠️ Note:
+ *       - Category is case-sensitive
+ *       - Leave fields empty to get all records
  *     tags: [Records]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: query
  *         name: type
+ *         description: Filter by record type
  *         schema:
  *           type: string
  *           enum: [income, expense]
+ *         example: income
  *       - in: query
  *         name: category
+ *         description: Filter by exact category name (case-sensitive)
  *         schema:
  *           type: string
+ *         example: Salary
  *       - in: query
  *         name: startDate
+ *         description: Start date for date range filter (inclusive)
  *         schema:
  *           type: string
  *           format: date
+ *         example: "2026-01-01"
  *       - in: query
  *         name: endDate
+ *         description: End date for date range filter (inclusive)
  *         schema:
  *           type: string
  *           format: date
+ *         example: "2026-12-31"
  *       - in: query
  *         name: page
+ *         description: Page number for pagination
  *         schema:
  *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         example: 1
  *       - in: query
  *         name: limit
+ *         description: Number of records per page
  *         schema:
  *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *           default: 5
+ *         example: 5
  *     responses:
  *       200:
  *         description: List of records
@@ -160,15 +185,39 @@ router.post(
  *                   type: array
  *                   items:
  *                     $ref: '#/components/schemas/Record'
- *             example:
- *               total: 12
- *               page: 1
- *               pages: 3
- *               data:
- *                 - _id: "507f1f77bcf86cd799439011"
- *                   amount: 500
- *                   type: expense
- *                   category: Food
+ *             examples:
+ *               filteredIncome:
+ *                 summary: Filtered by income category with pagination
+ *                 value:
+ *                   total: 2
+ *                   page: 1
+ *                   pages: 1
+ *                   data:
+ *                     - _id: "507f1f77bcf86cd799439011"
+ *                       amount: 5000
+ *                       type: income
+ *                       category: Salary
+ *                       notes: Monthly salary
+ *                       createdAt: "2026-03-01T10:00:00.000Z"
+ *                     - _id: "507f1f77bcf86cd799439012"
+ *                       amount: 750
+ *                       type: income
+ *                       category: Salary
+ *                       notes: Bonus
+ *                       createdAt: "2026-03-15T10:00:00.000Z"
+ *               allRecords:
+ *                 summary: No filters (all accessible records)
+ *                 value:
+ *                   total: 12
+ *                   page: 1
+ *                   pages: 3
+ *                   data:
+ *                     - _id: "507f1f77bcf86cd799439013"
+ *                       amount: 500
+ *                       type: expense
+ *                       category: Food
+ *                       notes: Groceries
+ *                       createdAt: "2026-02-10T08:00:00.000Z"
  *       401:
  *         description: Unauthorized (Invalid or missing token)
  *         content:
