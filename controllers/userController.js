@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, adminSecret } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -13,12 +13,17 @@ exports.register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Always viewer — admin/analyst roles must be assigned in the DB (prevents privilege escalation)
+    // Default to least privilege; only a server-side secret can elevate to admin.
+    let role = "viewer";
+    if (adminSecret && adminSecret === process.env.ADMIN_SECRET) {
+      role = "admin";
+    }
+
     const user = await User.create({
       name,
       email,
       password: hashedPassword,
-      role: "viewer",
+      role,
     });
 
     const { password: _, ...userData } = user._doc;

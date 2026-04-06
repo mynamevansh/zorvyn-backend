@@ -35,6 +35,21 @@ https://bit.ly/48mwf5k
 
 ---
 
+## 🔐 Admin Access (For Testing)
+
+To test admin-only APIs in this assignment/demo setup:
+
+- Set in `.env`: `ADMIN_SECRET=testadmin123`
+- Include this field in the register request body when creating an admin test user:
+
+```json
+{
+  "adminSecret": "testadmin123"
+}
+```
+
+---
+
 ## ⚠️ Deployment Note
 
 - The API is hosted on **Render** (free tier).
@@ -47,7 +62,7 @@ https://bit.ly/48mwf5k
 ### 🔐 User & Role Management
 - User Registration & Login (JWT Authentication)
 - Role-Based Access Control (Admin, Analyst, Viewer)
-- **Admin role is restricted for security (prevents privilege escalation):** new registrations always receive the `viewer` role. To grant **admin** (or **analyst**), update the user document directly in MongoDB—self-service role selection is not exposed on the API.
+- **Admin role is restricted for security (prevents privilege escalation):** role elevation is controlled server-side and is not exposed as a normal public role selector.
 
 ### 💰 Financial Records
 - Create, Read, Update, Delete (CRUD)
@@ -241,7 +256,7 @@ You can use Postman or Hoppscotch to test the APIs easily.
 - Roles define access level:
   - Admin → Full access
   - Analyst/Viewer → Read-only
-- **Admin** is not selectable at signup; it is assigned only via the database.
+- **Admin** is not selectable as a normal signup role; elevation is controlled only by server-side security checks.
 - Data is structured for efficient aggregation
 
 ---
@@ -259,7 +274,7 @@ You can use Postman or Hoppscotch to test the APIs easily.
 ## 🚀 Why This Project Stands Out
 
 - Clean MVC-style layout with separation of concerns (routes, controllers, models, middleware)
-- Role-based access control with deliberate security choices (e.g., admin not self-assignable at registration)
+- Role-based access control with deliberate security choices (admin is not openly self-assignable)
 - MongoDB aggregation pipelines for realistic analytics (summaries, categories, monthly income vs expense)
 - Pagination and filtering for scalable record access
 - Swagger UI plus external API docs for straightforward testing
