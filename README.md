@@ -30,6 +30,7 @@ https://bit.ly/48mwf5k
 ### 🔐 User & Role Management
 - User Registration & Login (JWT Authentication)
 - Role-Based Access Control (Admin, Analyst, Viewer)
+- **Admin role is restricted for security (prevents privilege escalation):** new registrations always receive the `viewer` role. To grant **admin** (or **analyst**), update the user document directly in MongoDB—self-service role selection is not exposed on the API.
 
 ### 💰 Financial Records
 - Create, Read, Update, Delete (CRUD)
@@ -45,7 +46,7 @@ https://bit.ly/48mwf5k
 ### 📊 Dashboard APIs
 - Total Income, Expense, Net Balance
 - Category-wise breakdown (income vs expense)
-- Monthly trends (with readable month labels)
+- **Monthly income vs expense** per calendar month (aggregated by `$month` and `type`—readable month labels, separate income and expense totals)
 - Recent transactions
 
 ### 🛡️ Validation & Error Handling
@@ -53,7 +54,11 @@ https://bit.ly/48mwf5k
 - Proper error handling with status codes
 
 ### ⚡ Performance Optimization
-- `.lean()` used in read queries for faster response
+- **`.lean()`** on read-heavy Mongoose queries (list records, recent transactions, user listing, and updates) so plain objects are returned—less overhead than full documents, better throughput on read paths.
+
+### 🏭 Production-Ready Operations
+- **Rate limiting** (`express-rate-limit`): 100 requests per 15 minutes per IP (helps reduce abuse and automated spam).
+- **Request logging** (`morgan`, `dev` format): structured HTTP logs in the console during development and debugging.
 
 ---
 
@@ -65,14 +70,14 @@ https://bit.ly/48mwf5k
 - Mongoose
 - JWT Authentication
 - express-validator
+- `express-rate-limit` (API rate limiting)
+- `morgan` (HTTP request logging)
 
 ---
 
-```
-
 ## 📁 Project Structure
 
-
+```
 zorvyn-backend/
 │
 ├── controllers/ # Business logic
@@ -151,7 +156,7 @@ npm run dev
 ### 📊 Dashboard
 - GET `/api/dashboard/summary`
 - GET `/api/dashboard/categories`
-- GET `/api/dashboard/trends`
+- GET `/api/dashboard/trends` — monthly **income** vs **expense** (per month)
 - GET `/api/dashboard/recent`
 
 ---
@@ -208,6 +213,7 @@ You can use Postman or Hoppscotch to test the APIs easily.
 - Roles define access level:
   - Admin → Full access
   - Analyst/Viewer → Read-only
+- **Admin** is not selectable at signup; it is assigned only via the database.
 - Data is structured for efficient aggregation
 
 ---
@@ -215,9 +221,10 @@ You can use Postman or Hoppscotch to test the APIs easily.
 ## ✨ Additional Improvements
 
 - Added pagination for scalability
-- Used aggregation pipelines for analytics
+- Aggregation pipelines for analytics (including monthly income vs expense)
 - Clean API response formatting
-- Optimized queries using `.lean()`
+- **`.lean()`** for optimized read performance on list and fetch endpoints
+- Rate limiting and HTTP request logging for production-style operations
 
 ---
 
@@ -229,4 +236,4 @@ You can use Postman or Hoppscotch to test the APIs easily.
 
 ## ⭐ Conclusion
 
-This backend is designed with scalability, security, and clean architecture in mind, making 
+This backend is designed with scalability, security, and clean architecture in mind, making it a solid foundation for a finance dashboard and production-style API practices.

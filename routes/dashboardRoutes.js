@@ -91,20 +91,27 @@ router.get("/categories", auth, getCategoryBreakdown);
  * @swagger
  * /api/dashboard/trends:
  *   get:
- *     summary: Monthly spending/income trends
+ *     summary: Monthly income vs expense
+ *     description: Per calendar month, sums income and expense separately (aggregation by month and type).
  *     tags: [Dashboard]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Array of { month, total }
+ *         description: Array of { month, income, expense }
  *         content:
  *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/MonthlyIncomeExpense'
  *             example:
  *               - month: Jan
- *                 total: 2400
+ *                 income: 5000
+ *                 expense: 3000
  *               - month: Feb
- *                 total: 1800
+ *                 income: 4200
+ *                 expense: 2800
  *       401:
  *         description: Unauthorized (Invalid or missing token)
  *         content:

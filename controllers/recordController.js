@@ -68,7 +68,7 @@ exports.updateRecord = async (req, res) => {
     const record = await Record.findOneAndUpdate(
       { _id: req.params.id, createdBy: req.user.id },
       req.body,
-      { new: true }
+      { new: true, lean: true }
     );
 
     if (!record) {

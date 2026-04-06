@@ -69,19 +69,34 @@ exports.getMonthlyTrends = async (req, res) => {
       { $match: { createdBy: ownerId(req) } },
       {
         $group: {
-          _id: { $month: "$date" },
+          _id: { month: { $month: "$date" }, type: "$type" },
           total: { $sum: "$amount" },
         },
       },
-      { $sort: { _id: 1 } },
+      { $sort: { "_id.month": 1 } },
     ]);
 
-    res.json(
-      data.map((item) => ({
-        month: MONTH_LABELS[item._id - 1],
-        total: item.total,
-      }))
-    );
+    const monthMap = new Map();
+    for (const row of data) {
+      const monthNum = row._id.month;
+      const type = row._id.type;
+      if (!monthMap.has(monthNum)) {
+        monthMap.set(monthNum, {
+          month: MONTH_LABELS[monthNum - 1],
+          income: 0,
+          expense: 0,
+        });
+      }
+      const entry = monthMap.get(monthNum);
+      if (type === "income") entry.income = row.total;
+      if (type === "expense") entry.expense = row.total;
+    }
+
+    const result = [...monthMap.entries()]
+      .sort((a, b) => a[0] - b[0])
+      .map(([, v]) => v);
+
+    res.json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -26,10 +26,6 @@ const role = require("../middleware/roleMiddleware");
  *                 format: email
  *               password:
  *                 type: string
- *               role:
- *                 type: string
- *                 enum: [viewer, analyst, admin]
- *                 default: viewer
  *     responses:
  *       201:
  *         description: User created

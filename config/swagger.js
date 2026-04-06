@@ -63,6 +63,14 @@ const options = {
             netBalance: { type: "number" },
           },
         },
+        MonthlyIncomeExpense: {
+          type: "object",
+          properties: {
+            month: { type: "string", description: "Short month label (Jan–Dec)" },
+            income: { type: "number" },
+            expense: { type: "number" },
+          },
+        },
         ErrorMessage: {
           type: "object",
           properties: {
