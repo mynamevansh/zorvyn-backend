@@ -34,7 +34,17 @@ const role = require("../middleware/roleMiddleware");
  *       201:
  *         description: User created
  *       400:
- *         description: Email already registered
+ *         description: Bad request — e.g. email already registered
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
  */
 router.post("/register", register);
 
@@ -67,6 +77,24 @@ router.post("/register", register);
  *                   type: string
  *                 user:
  *                   $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Invalid credentials
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
+ *       404:
+ *         description: Invalid email or password
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
  */
 router.post("/login", login);
 
@@ -89,6 +117,18 @@ router.post("/login", login);
  *     responses:
  *       200:
  *         description: Array of users (password omitted)
+ *       401:
+ *         description: Unauthorized — missing or invalid JWT
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
  */
 router.get("/all", auth, role("admin"), getAllUsers);
 

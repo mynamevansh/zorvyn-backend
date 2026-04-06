@@ -55,6 +55,24 @@ const options = {
             netBalance: { type: "number" },
           },
         },
+        ErrorMessage: {
+          type: "object",
+          properties: {
+            message: { type: "string" },
+          },
+        },
+        ValidationError: {
+          type: "object",
+          properties: {
+            errors: {
+              type: "array",
+              items: {
+                type: "object",
+                additionalProperties: true,
+              },
+            },
+          },
+        },
       },
     },
   },

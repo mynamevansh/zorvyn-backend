@@ -25,6 +25,18 @@ const auth = require("../middleware/authMiddleware");
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Summary'
+ *       401:
+ *         description: Unauthorized — missing or invalid JWT
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
  */
 router.get("/summary", auth, getSummary);
 
@@ -39,6 +51,18 @@ router.get("/summary", auth, getSummary);
  *     responses:
  *       200:
  *         description: Array of { category, type, total }
+ *       401:
+ *         description: Unauthorized — missing or invalid JWT
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
  */
 router.get("/categories", auth, getCategoryBreakdown);
 
@@ -53,6 +77,18 @@ router.get("/categories", auth, getCategoryBreakdown);
  *     responses:
  *       200:
  *         description: Array of { month, total }
+ *       401:
+ *         description: Unauthorized — missing or invalid JWT
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
  */
 router.get("/trends", auth, getMonthlyTrends);
 
@@ -67,6 +103,18 @@ router.get("/trends", auth, getMonthlyTrends);
  *     responses:
  *       200:
  *         description: Array of record documents
+ *       401:
+ *         description: Unauthorized — missing or invalid JWT
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
  */
 router.get("/recent", auth, getRecentTransactions);
 
