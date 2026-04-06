@@ -10,9 +10,60 @@ const {
 
 const auth = require("../middleware/authMiddleware");
 
+/**
+ * @swagger
+ * /api/dashboard/summary:
+ *   get:
+ *     summary: Income, expense, and net balance totals
+ *     tags: [Dashboard]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Aggregated totals for the authenticated user
+ */
 router.get("/summary", auth, getSummary);
+
+/**
+ * @swagger
+ * /api/dashboard/categories:
+ *   get:
+ *     summary: Category breakdown by type
+ *     tags: [Dashboard]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Array of { category, type, total }
+ */
 router.get("/categories", auth, getCategoryBreakdown);
+
+/**
+ * @swagger
+ * /api/dashboard/trends:
+ *   get:
+ *     summary: Monthly spending/income trends
+ *     tags: [Dashboard]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Array of { month, total }
+ */
 router.get("/trends", auth, getMonthlyTrends);
+
+/**
+ * @swagger
+ * /api/dashboard/recent:
+ *   get:
+ *     summary: Recent transactions (latest 5)
+ *     tags: [Dashboard]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Array of record documents
+ */
 router.get("/recent", auth, getRecentTransactions);
 
 module.exports = router;

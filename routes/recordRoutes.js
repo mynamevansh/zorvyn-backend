@@ -27,6 +27,40 @@ const validateRecord = [
     .withMessage("Category is required"),
 ];
 
+/**
+ * @swagger
+ * /api/records:
+ *   post:
+ *     summary: Create a financial record
+ *     tags: [Records]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [amount, type, category]
+ *             properties:
+ *               amount:
+ *                 type: number
+ *               type:
+ *                 type: string
+ *                 enum: [income, expense]
+ *               category:
+ *                 type: string
+ *               date:
+ *                 type: string
+ *                 format: date-time
+ *               notes:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Record created
+ *       400:
+ *         description: Validation error
+ */
 router.post(
   "/",
   auth,
@@ -35,6 +69,46 @@ router.post(
   createRecord
 );
 
+/**
+ * @swagger
+ * /api/records:
+ *   get:
+ *     summary: List records with filters and pagination
+ *     tags: [Records]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: type
+ *         schema:
+ *           type: string
+ *           enum: [income, expense]
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: startDate
+ *         schema:
+ *           type: string
+ *           format: date
+ *       - in: query
+ *         name: endDate
+ *         schema:
+ *           type: string
+ *           format: date
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Paginated list (total, page, pages, data)
+ */
 router.get(
   "/",
   auth,
@@ -42,6 +116,46 @@ router.get(
   getRecords
 );
 
+/**
+ * @swagger
+ * /api/records/{id}:
+ *   put:
+ *     summary: Update a record
+ *     tags: [Records]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [amount, type, category]
+ *             properties:
+ *               amount:
+ *                 type: number
+ *               type:
+ *                 type: string
+ *                 enum: [income, expense]
+ *               category:
+ *                 type: string
+ *               date:
+ *                 type: string
+ *                 format: date-time
+ *               notes:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Updated record
+ *       404:
+ *         description: Record not found
+ */
 router.put(
   "/:id",
   auth,
@@ -50,6 +164,26 @@ router.put(
   updateRecord
 );
 
+/**
+ * @swagger
+ * /api/records/{id}:
+ *   delete:
+ *     summary: Delete a record
+ *     tags: [Records]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Record deleted
+ *       404:
+ *         description: Record not found
+ */
 router.delete(
   "/:id",
   auth,
