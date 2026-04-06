@@ -4,15 +4,22 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Zorvyn Finance Dashboard API",
+      title: "Zorvyn Finance API",
       version: "1.0.0",
-      description: `API documentation for Finance Dashboard Backend.
+      description: `
+🚀 Finance Dashboard Backend API
 
-🔐 Authentication:
-1. Login via /api/users/login
-2. Copy the JWT token
-3. Click "Authorize" button (top right)
-4. Enter: Bearer <your_token>`,
+🔹 **How to use:**
+1. Register -> Login -> Get Token
+2. Click "Authorize" and paste token
+3. Test protected APIs
+
+----------------------------------------
+
+📘 **Below section shows API documentation (not actual response)**
+
+⚡ After clicking "Execute", check the **Server Response above**
+      `,
     },
     servers: [
       {

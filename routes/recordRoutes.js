@@ -31,7 +31,15 @@ const validateRecord = [
  * @swagger
  * /api/records:
  *   post:
- *     summary: Create a record
+ *     summary: Create a new record
+ *     description: |
+ *       🔐 **Requires Admin Role**
+ *
+ *       ⚡ After clicking **Execute**:
+ *       - Check **Server Response** above for actual result
+ *       - Below section shows example/documentation format
+ *
+ *       ----------------------------------------
  *     tags: [Records]
  *     security:
  *       - bearerAuth: []
@@ -73,6 +81,8 @@ const validateRecord = [
  *               $ref: '#/components/schemas/ErrorMessage'
  *             example:
  *               message: No token
+ *       403:
+ *         description: Access denied
  *       500:
  *         description: Server error
  *         content:
@@ -95,6 +105,12 @@ router.post(
  * /api/records:
  *   get:
  *     summary: Get records
+ *     description: |
+ *       🔐 **Requires Authenticated User** (Admin/Analyst/Viewer)
+ *
+ *       ⚡ After clicking **Execute**, use **Server Response** above for live output.
+ *
+ *       ----------------------------------------
  *     tags: [Records]
  *     security:
  *       - bearerAuth: []
@@ -182,6 +198,12 @@ router.get(
  * /api/records/{id}:
  *   put:
  *     summary: Update a record
+ *     description: |
+ *       🔐 **Requires Admin Role**
+ *
+ *       ⚡ Check **Server Response** above for real update payload.
+ *
+ *       ----------------------------------------
  *     tags: [Records]
  *     security:
  *       - bearerAuth: []
@@ -222,6 +244,8 @@ router.get(
  *               $ref: '#/components/schemas/ErrorMessage'
  *             example:
  *               message: Invalid token
+ *       403:
+ *         description: Access denied
  *       404:
  *         description: Record not found
  *         content:
@@ -252,6 +276,12 @@ router.put(
  * /api/records/{id}:
  *   delete:
  *     summary: Delete a record
+ *     description: |
+ *       🔐 **Requires Admin Role**
+ *
+ *       ⚡ Check **Server Response** above for final delete status.
+ *
+ *       ----------------------------------------
  *     tags: [Records]
  *     security:
  *       - bearerAuth: []
@@ -276,6 +306,8 @@ router.put(
  *               $ref: '#/components/schemas/ErrorMessage'
  *             example:
  *               message: No token
+ *       403:
+ *         description: Access denied
  *       404:
  *         description: Record not found
  *         content:

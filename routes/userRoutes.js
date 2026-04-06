@@ -10,6 +10,12 @@ const role = require("../middleware/roleMiddleware");
  * /api/users/register:
  *   post:
  *     summary: Register a new user
+ *     description: |
+ *       🌐 Public endpoint
+ *
+ *       ⚡ After clicking **Execute**, use **Server Response** above for created user data.
+ *
+ *       ----------------------------------------
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -61,6 +67,13 @@ router.post("/register", register);
  * /api/users/login:
  *   post:
  *     summary: Login user
+ *     description: |
+ *       🌐 Public endpoint
+ *
+ *       ⚡ This returns JWT token.
+ *       Use it in **Authorize** to test protected APIs.
+ *
+ *       ----------------------------------------
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -122,7 +135,12 @@ router.post("/login", login);
  * /api/users/all:
  *   get:
  *     summary: Get all users (paginated)
- *     description: Admin only — Get all users. Requires admin role and a valid JWT.
+ *     description: |
+ *       🔐 **Requires Admin Role**
+ *
+ *       ⚡ After clicking **Execute**, check **Server Response** above for the paginated user list.
+ *
+ *       ----------------------------------------
  *     tags: [Auth]
  *     security:
  *       - bearerAuth: []
@@ -144,6 +162,8 @@ router.post("/login", login);
  *               $ref: '#/components/schemas/ErrorMessage'
  *             example:
  *               message: Invalid token
+ *       403:
+ *         description: Access denied
  *       500:
  *         description: Server error
  *         content:

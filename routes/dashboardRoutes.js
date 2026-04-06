@@ -15,6 +15,12 @@ const auth = require("../middleware/authMiddleware");
  * /api/dashboard/summary:
  *   get:
  *     summary: Get financial summary
+ *     description: |
+ *       🔐 **Requires Authentication**
+ *
+ *       ⚡ Check **Server Response** above for actual aggregated values.
+ *
+ *       ----------------------------------------
  *     tags: [Dashboard]
  *     security:
  *       - bearerAuth: []
@@ -53,6 +59,12 @@ router.get("/summary", auth, getSummary);
  * /api/dashboard/categories:
  *   get:
  *     summary: Category breakdown by type
+ *     description: |
+ *       🔐 **Requires Authentication**
+ *
+ *       ⚡ Check **Server Response** above for real category totals.
+ *
+ *       ----------------------------------------
  *     tags: [Dashboard]
  *     security:
  *       - bearerAuth: []
@@ -92,7 +104,14 @@ router.get("/categories", auth, getCategoryBreakdown);
  * /api/dashboard/trends:
  *   get:
  *     summary: Monthly income vs expense
- *     description: Per calendar month, sums income and expense separately (aggregation by month and type).
+ *     description: |
+ *       🔐 **Requires Authentication**
+ *
+ *       Returns monthly income vs expense using aggregation by month and type.
+ *
+ *       ⚡ Check **Server Response** above for actual analytics output.
+ *
+ *       ----------------------------------------
  *     tags: [Dashboard]
  *     security:
  *       - bearerAuth: []
@@ -136,6 +155,12 @@ router.get("/trends", auth, getMonthlyTrends);
  * /api/dashboard/recent:
  *   get:
  *     summary: Recent transactions (latest 5)
+ *     description: |
+ *       🔐 **Requires Authentication**
+ *
+ *       ⚡ Check **Server Response** above for latest records.
+ *
+ *       ----------------------------------------
  *     tags: [Dashboard]
  *     security:
  *       - bearerAuth: []
