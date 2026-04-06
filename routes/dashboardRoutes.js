@@ -14,13 +14,17 @@ const auth = require("../middleware/authMiddleware");
  * @swagger
  * /api/dashboard/summary:
  *   get:
- *     summary: Income, expense, and net balance totals
+ *     summary: Get financial summary
  *     tags: [Dashboard]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Aggregated totals for the authenticated user
+ *         description: Summary data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Summary'
  */
 router.get("/summary", auth, getSummary);
 

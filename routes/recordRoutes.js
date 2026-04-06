@@ -31,7 +31,7 @@ const validateRecord = [
  * @swagger
  * /api/records:
  *   post:
- *     summary: Create a financial record
+ *     summary: Create a record
  *     tags: [Records]
  *     security:
  *       - bearerAuth: []
@@ -40,24 +40,14 @@ const validateRecord = [
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required: [amount, type, category]
- *             properties:
- *               amount:
- *                 type: number
- *               type:
- *                 type: string
- *                 enum: [income, expense]
- *               category:
- *                 type: string
- *               date:
- *                 type: string
- *                 format: date-time
- *               notes:
- *                 type: string
+ *             $ref: '#/components/schemas/Record'
  *     responses:
  *       201:
  *         description: Record created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Record'
  *       400:
  *         description: Validation error
  */
@@ -73,7 +63,7 @@ router.post(
  * @swagger
  * /api/records:
  *   get:
- *     summary: List records with filters and pagination
+ *     summary: Get records
  *     tags: [Records]
  *     security:
  *       - bearerAuth: []
@@ -107,7 +97,22 @@ router.post(
  *           type: integer
  *     responses:
  *       200:
- *         description: Paginated list (total, page, pages, data)
+ *         description: List of records
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 total:
+ *                   type: number
+ *                 page:
+ *                   type: number
+ *                 pages:
+ *                   type: number
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Record'
  */
 router.get(
   "/",
@@ -135,24 +140,14 @@ router.get(
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required: [amount, type, category]
- *             properties:
- *               amount:
- *                 type: number
- *               type:
- *                 type: string
- *                 enum: [income, expense]
- *               category:
- *                 type: string
- *               date:
- *                 type: string
- *                 format: date-time
- *               notes:
- *                 type: string
+ *             $ref: '#/components/schemas/Record'
  *     responses:
  *       200:
  *         description: Updated record
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Record'
  *       404:
  *         description: Record not found
  */

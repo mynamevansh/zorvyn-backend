@@ -10,7 +10,7 @@ const role = require("../middleware/roleMiddleware");
  * /api/users/register:
  *   post:
  *     summary: Register a new user
- *     tags: [Register]
+ *     tags: [Auth]
  *     requestBody:
  *       required: true
  *       content:
@@ -50,19 +50,14 @@ router.post("/register", register);
  *         application/json:
  *           schema:
  *             type: object
- *             required: [email, password]
  *             properties:
  *               email:
  *                 type: string
- *                 format: email
  *               password:
  *                 type: string
- *           example:
- *             email: vansh@gmail.com
- *             password: "123456"
  *     responses:
  *       200:
- *         description: Login successful — returns JWT and user (without password)
+ *         description: Login successful
  *         content:
  *           application/json:
  *             schema:
@@ -71,11 +66,7 @@ router.post("/register", register);
  *                 token:
  *                   type: string
  *                 user:
- *                   type: object
- *       400:
- *         description: Invalid credentials
- *       404:
- *         description: Invalid email or password
+ *                   $ref: '#/components/schemas/User'
  */
 router.post("/login", login);
 

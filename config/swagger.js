@@ -14,10 +14,9 @@ const options = {
       },
     ],
     tags: [
-      { name: "Auth", description: "Login and admin user listing (JWT)" },
-      { name: "Register", description: "Create a new user account" },
-      { name: "Records", description: "Financial records (CRUD, filters, pagination)" },
-      { name: "Dashboard", description: "Summaries, trends, and recent activity" },
+      { name: "Auth", description: "Authentication APIs" },
+      { name: "Records", description: "Financial records APIs" },
+      { name: "Dashboard", description: "Analytics APIs" },
     ],
     components: {
       securitySchemes: {
@@ -25,6 +24,36 @@ const options = {
           type: "http",
           scheme: "bearer",
           bearerFormat: "JWT",
+        },
+      },
+      schemas: {
+        User: {
+          type: "object",
+          properties: {
+            _id: { type: "string" },
+            name: { type: "string" },
+            email: { type: "string" },
+            role: { type: "string" },
+          },
+        },
+        Record: {
+          type: "object",
+          properties: {
+            _id: { type: "string" },
+            amount: { type: "number" },
+            type: { type: "string", enum: ["income", "expense"] },
+            category: { type: "string" },
+            notes: { type: "string" },
+            createdAt: { type: "string" },
+          },
+        },
+        Summary: {
+          type: "object",
+          properties: {
+            totalIncome: { type: "number" },
+            totalExpense: { type: "number" },
+            netBalance: { type: "number" },
+          },
         },
       },
     },
