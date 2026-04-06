@@ -188,6 +188,10 @@ Authorization: Bearer your_jwt_token_here
 - Tokens may expire after some time.
 - If you get `401 Unauthorized`, log in again to obtain a new token.
 
+### 💡 Tip
+
+You can use Postman or Hoppscotch to test the APIs easily.
+
 ---
 
 ## 🧠 Assumptions
