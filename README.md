@@ -1,4 +1,4 @@
-# 💰 Zorvyn Finance Dashboard Backend
+# 💰Finance Dashboard Backend
 
 This is a production-ready backend system for a finance dashboard, designed with secure authentication, role-based access control, scalable data handling, and real-time financial analytics.
 
